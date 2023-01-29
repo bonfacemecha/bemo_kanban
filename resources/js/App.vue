@@ -12,10 +12,6 @@
      import custom_1 from "./customscript";
    
   export default {
-    async created() {
-      /* const response = await axios.get("user");
-      this.$store.dispatch('user', response.data); */
-    },
     mounted() {
     custom_1.init();
   },
