@@ -9,13 +9,9 @@
   <script>
   
      import axios from "axios";
-     import custom_1 from "./customscript";
    
   export default {
-    mounted() {
-    custom_1.init();
-  },
-  };
+    };
   </script>
   
   <style>
