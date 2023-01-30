@@ -75,6 +75,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4035,7 +4038,7 @@ var render = function () {
                   _c(
                     "a",
                     {
-                      attrs: { href: "#", "data-id": "exampleModal" + col.id },
+                      attrs: { href: "#", "data-id": "'exampleModal'+col.id" },
                       on: {
                         click: function ($event) {
                           return _vm.editModalWindow(item)
@@ -4045,6 +4048,27 @@ var render = function () {
                     [
                       _c("div", { staticClass: "card" }, [
                         _c("h4", [_vm._v(_vm._s(item.title))]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn-default",
+                            attrs: {
+                              href: "#",
+                              "data-id": "'exampleModal'+col.id",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.editModalWindow(item)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                            View\n                        "
+                            ),
+                          ]
+                        ),
                       ]),
                     ]
                   ),
