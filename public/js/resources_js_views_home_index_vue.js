@@ -68,6 +68,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -76,6 +81,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   name: "Home",
   data: function data() {
     return {
+      editMode: false,
       title: "",
       showModal: false,
       showModal2: false,
@@ -92,8 +98,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         title: this.getDeliverable.title
       }).then(function (res) {
         Toast.fire({
-          icon: 'success',
-          title: 'Record added successfully'
+          icon: "success",
+          title: "Record added successfully"
         });
         _this.showModal = false;
         _this.getDeliverable.title = "";
@@ -112,28 +118,56 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       };
       axios__WEBPACK_IMPORTED_MODULE_1___default().post("/tasks", payload).then(function (res) {
         Toast.fire({
-          icon: 'success',
-          title: 'Record added successfully'
+          icon: "success",
+          title: "Record added successfully"
         });
         _this2.showModal2 = false;
-        _this2.getTask.title = "";
-        _this2.getTask.description = "";
+        _this2.editMode = false;
+        _this2.getTask.reset();
         _this2.getAllDeliverables();
       })["catch"](function (err) {
         console.log("Error : ".concat(err));
       });
     },
-    deleteCol: function deleteCol(value) {
+    updateTask: function updateTask() {
       var _this3 = this;
-      axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("/deliverables/" + value).then(function (res) {
+      var payload = {
+        title: this.getTask.title,
+        description: this.getTask.description
+      };
+      axios__WEBPACK_IMPORTED_MODULE_1___default().put("/tasks/" + this.getTask.id, payload).then(function (res) {
         Toast.fire({
-          icon: 'success',
-          title: 'Record deleted successfully'
+          icon: "success",
+          title: "Record updated successfully"
         });
+        _this3.showModal2 = false;
+        _this3.getTask.reset();
+        _this3.editMode = false;
         _this3.getAllDeliverables();
       })["catch"](function (err) {
         console.log("Error : ".concat(err));
       });
+    },
+    deleteCol: function deleteCol(value) {
+      var _this4 = this;
+      axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("/deliverables/" + value).then(function (res) {
+        Toast.fire({
+          icon: "success",
+          title: "Record deleted successfully"
+        });
+        _this4.getAllDeliverables();
+      })["catch"](function (err) {
+        console.log("Error : ".concat(err));
+      });
+    },
+    editModalWindow: function editModalWindow(item) {
+      this.getTask.clear();
+      this.editMode = true;
+      this.getTask.reset();
+      this.card_id = item.deliverable_id;
+      console.log(item.deliverable_id);
+      this.showModal2 = true;
+      this.getTask.fill(item);
     },
     openModal: function openModal() {
       this.showModal = true;
@@ -142,11 +176,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.showModal = false;
     },
     openModal2: function openModal2(value) {
+      this.editMode = false;
       this.card_id = value;
       this.showModal2 = true;
+      this.getTask.reset();
     },
     closeModal2: function closeModal2() {
       this.showModal2 = false;
+      this.getTask.reset();
     }
   }),
   components: {
@@ -3965,7 +4002,7 @@ var render = function () {
   return _c("div", { staticClass: "container" }, [
     _c(
       "div",
-      { staticClass: "columns" },
+      { staticClass: "row" },
       [
         _vm._l(_vm.allDeliverables, function (col) {
           return _c(
@@ -3993,8 +4030,19 @@ var render = function () {
               _vm._v(" "),
               _vm._l(col.tasks, function (item) {
                 return _c("div", { key: item.id, staticClass: "card" }, [
-                  _vm._v(
-                    "\n                " + _vm._s(item.title) + "\n            "
+                  _c("h4", [_vm._v(_vm._s(item.title))]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#", "data-id": "exampleModal" + col.id },
+                      on: {
+                        click: function ($event) {
+                          return _vm.editModalWindow(item)
+                        },
+                      },
+                    },
+                    [_vm._v("\n                    edit\n                ")]
                   ),
                 ])
               }),
@@ -4025,9 +4073,39 @@ var render = function () {
                     },
                     [
                       _c("div", { staticClass: "modal-content" }, [
-                        _c("h1", { staticClass: "modal-title" }, [
-                          _vm._v("Add New Card"),
-                        ]),
+                        _c(
+                          "h5",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.editMode,
+                                expression: "!editMode",
+                              },
+                            ],
+                            staticClass: "modal-title",
+                            attrs: { id: "addNewLabel" },
+                          },
+                          [_vm._v("Add New Card")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "h5",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.editMode,
+                                expression: "editMode",
+                              },
+                            ],
+                            staticClass: "modal-title",
+                            attrs: { id: "addNewLabel" },
+                          },
+                          [_vm._v("Update Card")]
+                        ),
                         _vm._v(" "),
                         _c(
                           "form",
@@ -4036,7 +4114,9 @@ var render = function () {
                             on: {
                               submit: function ($event) {
                                 $event.preventDefault()
-                                return _vm.storeTask(col.id)
+                                _vm.editMode
+                                  ? _vm.updateTask()
+                                  : _vm.storeTask(col.id)
                               },
                             },
                           },
@@ -4101,8 +4181,36 @@ var render = function () {
                             _vm._v(" "),
                             _c(
                               "button",
-                              { staticClass: "btn", attrs: { type: "submit" } },
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: !_vm.editMode,
+                                    expression: "!editMode",
+                                  },
+                                ],
+                                staticClass: "btn",
+                                attrs: { type: "submit" },
+                              },
                               [_vm._v("Submit")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.editMode,
+                                    expression: "editMode",
+                                  },
+                                ],
+                                staticClass: "btn btn-primary",
+                                attrs: { type: "submit" },
+                              },
+                              [_vm._v("Update")]
                             ),
                           ]
                         ),

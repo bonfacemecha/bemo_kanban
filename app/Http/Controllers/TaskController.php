@@ -121,7 +121,26 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+      
+
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+        if($validator->fails()){
+            return $this->sendError($validator->errors());       
+        }
+        $task->title = $input['title'];
+        $task->description = $input['description'];
+
+       if ($task->save()) {
+        return response()->json([
+            'message' => 'Record updated!',
+            'status' => 'true'
+        ]);
+       }
+
     }
 
     /**

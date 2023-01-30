@@ -2,16 +2,23 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 
+import { Form } from 'vform'
+
 Vue.use(Vuex);
 
 const state = {
  deliverable: {
     title: ""
  },
- task: {
-    title: "",
-    description: "",
- },
+ task: new Form({
+  id: '',
+  title: "",
+  description: "",
+  status: "",
+  deliverable_id: "",
+
+}),
+
  allDeliverables: [],
  
 };
