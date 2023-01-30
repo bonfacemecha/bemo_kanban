@@ -70,6 +70,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -4026,20 +4031,24 @@ var render = function () {
               ]),
               _vm._v(" "),
               _vm._l(col.tasks, function (item) {
-                return _c(
-                  "div",
-                  {
-                    key: item.id,
-                    staticClass: "card",
-                    attrs: { "data-id": "exampleModal" + col.id },
-                    on: {
-                      click: function ($event) {
-                        return _vm.editModalWindow(item)
+                return _c("div", { key: item.id }, [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#", "data-id": "exampleModal" + col.id },
+                      on: {
+                        click: function ($event) {
+                          return _vm.editModalWindow(item)
+                        },
                       },
                     },
-                  },
-                  [_c("h4", [_vm._v(_vm._s(item.title))])]
-                )
+                    [
+                      _c("div", { staticClass: "card" }, [
+                        _c("h4", [_vm._v(_vm._s(item.title))]),
+                      ]),
+                    ]
+                  ),
+                ])
               }),
               _vm._v(" "),
               _c(

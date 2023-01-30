@@ -32,6 +32,13 @@
   .card:hover {
     background-color: #ccc;
   }
+  .card h4{
+    text-decoration: none;
+    color: rgb(59, 59, 59);
+  }
+  a:link {
+    text-decoration: none;
+  }
 
   /* Define column title styles */
   .column-title {
