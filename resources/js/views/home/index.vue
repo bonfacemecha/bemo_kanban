@@ -9,9 +9,6 @@
                     <a href="#" data-id="'exampleModal'+col.id" @click="editModalWindow(item)">
                         <div class="card">
                             <h4>{{item.title}}</h4>
-                            <button class="btn-default" href="#" data-id="'exampleModal'+col.id" @click="editModalWindow(item)">
-                                View
-                            </button>
                         </div>
                     </a>
                 </div>
