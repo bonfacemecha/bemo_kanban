@@ -24,7 +24,12 @@
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
+  cursor: pointer;
   box-shadow: 2px 2px 5px #ccc;
+}
+
+.card:hover {
+  background-color: #ccc;
 }
 
 /* Define column title styles */

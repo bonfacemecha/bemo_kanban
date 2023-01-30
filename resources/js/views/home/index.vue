@@ -4,11 +4,8 @@
             <div class="column" v-for="col in allDeliverables" :key="col.id">
                 <button class="btn btn--state-delete" type="button" title="delete" @click.prevent="deleteCol(col.id, $event)">X</button>
                 <h2 class="column-title">{{ col.title }}</h2>
-                <div class="card" v-for="item in col.tasks" :key="item.id">
-                    <h4>{{item.title}}</h4>
-                    <a href="#" :data-id="'exampleModal'+col.id" @click="editModalWindow(item)">
-                        edit
-                    </a>
+                <div class="card" :data-id="'exampleModal'+col.id" @click="editModalWindow(item)" v-for="item in col.tasks" :key="item.id">
+                        <h4>{{item.title}}</h4>
                 </div>
 
                 <button class="btn" data-toggle="modal" :data-target="'#exampleModal'+col.id" @click="openModal2(col.id)">Add Card</button>
