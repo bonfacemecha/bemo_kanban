@@ -14,7 +14,7 @@
                 </div>
 
                 <button class="btn" data-toggle="modal" :data-target="'#exampleModal'+col.id" @click="openModal2(col.id)">Add Card</button>
-                <div v-if="showModal2 && card_id === col.id " :id="'exampleModal'+col.id" class="modal-overlay">
+                <div v-if="showModal2 && card_id === col.id" :id="'exampleModal'+col.id" class="modal-overlay">
                     <div class="modal-content">
                         <h5 v-show="!editMode" class="modal-title" id="addNewLabel">Add New Card</h5>
                         <h5 v-show="editMode" class="modal-title" id="addNewLabel">Update Card</h5>
