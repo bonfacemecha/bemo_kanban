@@ -74,7 +74,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 //
 //
 //
-//
 
 
 
@@ -163,13 +162,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     editModalWindow: function editModalWindow(item) {
+      console.log(item.deliverable_id + ' ' + this.editMode + ' ' + this.card_id + '' + this.showModal2);
       this.getTask.clear();
       this.editMode = true;
       this.getTask.reset();
       this.card_id = item.deliverable_id;
-      console.log(item.deliverable_id);
-      this.showModal2 = true;
       this.getTask.fill(item);
+      this.showModal2 = true;
     },
     openModal: function openModal() {
       this.showModal = true;
@@ -4033,7 +4032,7 @@ var render = function () {
               _vm._l(col.tasks, function (item) {
                 return _c("div", { key: item.id }, [
                   _c(
-                    "button",
+                    "a",
                     {
                       attrs: {
                         "data-toggle": "modal",

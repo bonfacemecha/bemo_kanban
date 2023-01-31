@@ -6,11 +6,11 @@
                 <h2 class="column-title">{{ col.title }}</h2>
 
                 <div v-for="item in col.tasks" :key="item.id">
-                    <button data-toggle="modal" :data-target="'#exampleModal'+col.id" @click="editModalWindow(item)">
+                    <a data-toggle="modal" :data-target="'#exampleModal'+col.id" @click="editModalWindow(item)">
                         <div class="card">
                             <h4>{{item.title}}</h4>
                         </div>
-                    </button>
+                    </a>
                 </div>
 
                 <button class="btn" data-toggle="modal" :data-target="'#exampleModal'+col.id" @click="openModal2(col.id)">Add Card</button>
@@ -23,7 +23,6 @@
                             <input type="text" v-model="getTask.title" id="title" />
                             <label for="description">Description</label>
                             <input type="text" v-model="getTask.description" id="description" />
-
                             <button v-show="!editMode" class="btn" type="submit">Submit</button>
                             <button v-show="editMode" type="submit" class="btn btn-primary">Update</button>
                         </form>
@@ -151,15 +150,14 @@
                         console.log(`Error : ${err}`);
                     });
             },
-
             editModalWindow(item) {
+                console.log(item.deliverable_id + ' '+  this.editMode + ' '+ this.card_id + '' + this.showModal2);
                 this.getTask.clear();
                 this.editMode = true;
                 this.getTask.reset();
                 this.card_id = item.deliverable_id;
-                console.log(item.deliverable_id);
-                this.showModal2 = true;
                 this.getTask.fill(item);
+                this.showModal2 = true;
             },
 
             openModal() {
