@@ -4033,9 +4033,12 @@ var render = function () {
               _vm._l(col.tasks, function (item) {
                 return _c("div", { key: item.id }, [
                   _c(
-                    "a",
+                    "button",
                     {
-                      attrs: { href: "#", "data-id": "'exampleModal'+col.id" },
+                      attrs: {
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModal" + col.id,
+                      },
                       on: {
                         click: function ($event) {
                           return _vm.editModalWindow(item)
